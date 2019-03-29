@@ -92,6 +92,14 @@ public class BogPlugin extends Plugin
 {
 	private static final int WALKABLE_BOG_TILE_ID = 13838;
 
+	// There are 6 map chunks that seem unique to the bog scene
+	private static final String BOG_CHUNK_1 = "0 2048 5000";
+	private static final String BOG_CHUNK_2 = "0 2048 5008";
+	private static final String BOG_CHUNK_3 = "0 2056 5000";
+	private static final String BOG_CHUNK_4 = "0 2056 5008";
+	private static final String BOG_CHUNK_5 = "0 2064 5000";
+	private static final String BOG_CHUNK_6 = "0 2064 5008";
+
 	@Getter
 	private final List<TileObject> walkableBogTiles = new ArrayList<>();
 
@@ -190,7 +198,56 @@ public class BogPlugin extends Plugin
 
 	private void onTileObject(Tile tile, TileObject oldObject, TileObject newObject)
 	{
+		// Not in an instance, assume not in Temple Trekking and skip code
+		if (!client.isInInstancedRegion()) {
+			walkableBogTiles.clear();
+			return;
+		}
+
+		// Assume not in the bog
+		boolean isInBog = false;
+
+		// Build the player's current chunk string as per the developer location plugin
+		int[][][] chunks = client.getInstanceTemplateChunks();
+		LocalPoint localPoint = client.getLocalPlayer().getLocalLocation();
+		int chunkData = chunks[client.getPlane()][localPoint.getSceneX() / CHUNK_SIZE][localPoint.getSceneY() / CHUNK_SIZE];
+		int rotation = chunkData >> 1 & 0x3;
+		int chunkY = (chunkData >> 3 & 0x7FF) * CHUNK_SIZE;
+		int chunkX = (chunkData >> 14 & 0x3FF) * CHUNK_SIZE;
+		String chunk = rotation + " " + chunkX + " " + chunkY;
+
+		// Check player's current chunk against possible bog chunks
+		switch (chunk) {
+			case BOG_CHUNK_1:
+				isInBog = true;
+				break;
+			case BOG_CHUNK_2:
+				isInBog = true;
+				break;
+			case BOG_CHUNK_3:
+				isInBog = true;
+				break;
+			case BOG_CHUNK_4:
+				isInBog = true;
+				break;
+			case BOG_CHUNK_5:
+				isInBog = true;
+				break;
+			case BOG_CHUNK_6:
+				isInBog = true;
+				break;
+		}
+
+		// Not in the bog, clear the bog tiles
+		if (!isInBog) {
+			walkableBogTiles.clear();
+			return;
+		}
+
+		// If bog tile changes, remove old reference
 		walkableBogTiles.remove(oldObject);
+
+		// If new found tile is a bog tile, add new reference
 		if (newObject != null && newObject.getId() == WALKABLE_BOG_TILE_ID) {
 			walkableBogTiles.add(newObject);
 		}
