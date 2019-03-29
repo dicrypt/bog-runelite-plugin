@@ -63,6 +63,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Tile;
 import net.runelite.api.TileObject;
+import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.events.DecorativeObjectChanged;
 import net.runelite.api.events.DecorativeObjectDespawned;
 import net.runelite.api.events.DecorativeObjectSpawned;
@@ -81,6 +82,7 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
+import static net.runelite.api.Constants.CHUNK_SIZE;
 
 @PluginDescriptor(
 	name = "Temple Trekking Bog",
