@@ -10,7 +10,7 @@ This idea came from a Swampletics video in which he used the RuneLite developer 
 
 ## Installation
 * Clone the RuneLite repo found [here](https://github.com/runelite/runelite).
-* Download this repo by clicking [here](https://github.com/i-yam-jeremy/bog-runelite-plugin/archive/master.zip)
+* Download this repo by clicking [here](https://github.com/dicrypt/bog-runelite-plugin/archive/master.zip)
 * Unzip the repo
 * Copy the `bog-runelite-plugin` folder to `RUNELITE_REPO_DIR/runelite-client/src/main/java/net/runelite/client/plugins` where `RUNELITE_REPO_DIR` is replaced with the path to the directory of where you cloned the RuneLite repo
 * Open a terminal and `cd` to `RUNELITE_REPO_DIR/runelite-client`
@@ -21,3 +21,5 @@ This idea came from a Swampletics video in which he used the RuneLite developer 
 ## Disclaimer
 This plugin is made for educational purposes only, I only used it once to test it. I will not be using it in the future because it completely eliminates the need to do the bog encounter how it was supposed to be played.
 
+## Changelog
+* Added check against player's current map chunk to see if it is one of the bog scene's map chunks - otherwise delete tiles.
